@@ -13,8 +13,8 @@ transactionRouter.get('/', (request, response) => {
     const balance = transactionsRepository.getBalance();
 
     const returnObj = {
-      transactions: [...transactions],
-      balance: { ...balance },
+      transactions,
+      balance,
     };
 
     response.json(returnObj);
@@ -27,11 +27,11 @@ transactionRouter.post('/', (request, response) => {
   try {
     const { title, value, type } = request.body;
 
-    const createTransactionRepository = new CreateTransactionService(
+    const createTransactionService = new CreateTransactionService(
       transactionsRepository,
     );
 
-    const transaction = createTransactionRepository.execute({
+    const transaction = createTransactionService.execute({
       title,
       value,
       type,
